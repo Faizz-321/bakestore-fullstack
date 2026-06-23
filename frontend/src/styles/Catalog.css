@@ -1,0 +1,329 @@
+.katalog-wrapper {
+  position: relative;
+  min-height: 100vh;
+  /* Menggunakan gambar toko roti sebagai latar belakang sementara */
+  background-image: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80'); 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.katalog-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.katalog-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  padding: 40px;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 250px;
+  height: fit-content;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.sidebar h3 { 
+  margin-top: 0; 
+  margin-bottom: 20px; 
+  font-size: 16px; 
+  font-weight: 800;
+}
+
+.category-item {
+  padding: 12px 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  color: #555;
+  font-size: 14px;
+  transition: transform 0.22s ease, background-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.category-item:hover {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+  transform: translateX(4px);
+  box-shadow: 0 12px 25px rgba(180, 83, 9, 0.12);
+}
+
+.category-item.active {
+  color: #d97706;
+  background-color: #fffbeb;
+}
+
+.category-item.highlight {
+  border: 2px solid #a855f7;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  flex: 1;
+}
+
+.product-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 300px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 15px 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.product-name { 
+  font-size: 15px; 
+  font-weight: 800; 
+  margin: 0; 
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  align-self: flex-start;
+}
+
+.product-price { 
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 10px 0;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  z-index: 20;
+  align-self: flex-start;
+}
+
+.btn-add {
+  background-color: #b45309;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 13px;
+  width: 100%;
+  border: 2px solid #b45309;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+}
+
+.btn-add.btn-disabled,
+.btn-add[disabled] {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #9ca3af;
+  border-color: rgba(156, 163, 175, 0.45);
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.btn-add.btn-disabled:hover,
+.btn-add[disabled]:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.stock-badge {
+  display: inline-flex;
+  font-size: 12px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.stock-badge.out-of-stock {
+  background-color: #ffffffee;
+  color: #b91c1c;
+  border: 1px solid rgba(185, 28, 28, 0.16);
+}
+
+.card-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 15;
+  backdrop-filter: blur(8px);
+}
+
+.btn-primary {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(180, 83, 9, 0.18);
+}
+
+.btn-primary:disabled {
+  opacity: 0.75;
+}
+
+.btn-primary:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-disabled {
+  pointer-events: none;
+}
+
+.btn-disabled:hover {
+  transform: none;
+}
+
+.btn-add:hover {
+  background-color: white;
+  color: #b45309;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 20px rgba(148, 64, 14, 0.18);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: white;
+  position: relative;
+  z-index: 20;
+}
+
+.brand-logo {
+  background-color: #fed7aa;
+  color: #c2410c;
+  padding: 8px 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.search-bar {
+  flex: 1;
+  max-width: 600px;
+  margin: 0 40px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #e5e7eb;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  color: #4b5563;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 20px;
+  color: #b45309;
+}
+
+/* Status Order Badge Styles */
+.order-status {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: capitalize;
+  transition: all 0.2s ease;
+}
+
+.status-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+}
+
+.status-pending:hover {
+  background-color: #fde68a;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+}
+
+.status-confirmed {
+  background-color: #dbeafe;
+  color: #0c4a6e;
+  border: 1px solid #bfdbfe;
+}
+
+.status-confirmed:hover {
+  background-color: #bfdbfe;
+  box-shadow: 0 4px 12px rgba(3, 102, 214, 0.15);
+}
+
+.status-processing {
+  background-color: #fed7aa;
+  color: #7c2d12;
+  border: 1px solid #fdba74;
+}
+
+.status-processing:hover {
+  background-color: #fdba74;
+  box-shadow: 0 4px 12px rgba(214, 88, 0, 0.15);
+}
+
+.status-completed {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.status-completed:hover {
+  background-color: #a7f3d0;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.status-cancelled {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+  border: 1px solid #fecaca;
+}
+
+.status-cancelled:hover {
+  background-color: #fecaca;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}

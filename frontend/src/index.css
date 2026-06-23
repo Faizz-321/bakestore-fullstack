@@ -1,0 +1,134 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+a,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+[role="button"] {
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease,
+    filter 0.2s ease;
+  cursor: pointer;
+}
+
+button:hover,
+a:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+[role="button"]:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-warning,
+.btn-success,
+.btn-blue {
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #b45309;
+  color: white;
+  border-color: #b45309;
+}
+
+.btn-primary:hover {
+  background-color: white;
+  color: #b45309;
+  border-color: #b45309;
+  box-shadow: 0 12px 18px rgba(180, 83, 9, 0.16);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #b45309;
+  border-color: #b45309;
+}
+
+.btn-secondary:hover {
+  background-color: #b45309;
+  color: white;
+  border-color: #b45309;
+  box-shadow: 0 12px 18px rgba(180, 83, 9, 0.16);
+}
+
+.btn-blue {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.btn-blue:hover {
+  background-color: white;
+  color: #3b82f6;
+  border-color: #3b82f6;
+  box-shadow: 0 12px 18px rgba(59, 130, 246, 0.16);
+}
+
+.btn-warning {
+  background-color: #f59e0b;
+  color: white;
+  border-color: #f59e0b;
+}
+
+.btn-warning:hover {
+  background-color: white;
+  color: #f59e0b;
+  border-color: #f59e0b;
+  box-shadow: 0 12px 18px rgba(245, 158, 11, 0.16);
+}
+
+.btn-success {
+  background-color: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.btn-success:hover {
+  background-color: white;
+  color: #10b981;
+  border-color: #10b981;
+  box-shadow: 0 12px 18px rgba(16, 185, 129, 0.16);
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+.btn-danger:hover {
+  background-color: white;
+  color: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 12px 18px rgba(239, 68, 68, 0.16);
+}
+
+button:disabled,
+button[disabled],
+input[type="button"][disabled],
+input[type="submit"][disabled],
+input[type="reset"][disabled] {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

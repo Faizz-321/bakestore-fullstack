@@ -30,7 +30,8 @@ router.post('/login', async (req, res) => {
       id: user.id,
       name: user.name,
       email: user.email,
-      role: user.role
+      role: user.role,
+      profilePicture: user.profilePicture
     }
   });
 });
@@ -54,6 +55,72 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     console.error('Register error:', error);
     res.status(500).json({ message: 'Gagal melakukan registrasi', error: error.message });
+  }
+});
+
+const multer = require('multer');
+const path = require('path');
+const authMiddleware = require('../middleware/auth');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/');
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'profile-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Hanya file gambar yang diizinkan'), false);
+    }
+  }
+});
+
+router.put('/profile', authMiddleware, upload.single('profilePicture'), async (req, res) => {
+  const { name, email } = req.body;
+  if (!name || !email) {
+    return res.status(400).json({ message: 'Nama dan email wajib diisi' });
+  }
+
+  try {
+    const user = await User.findByPk(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
+    }
+
+    if (email !== user.email) {
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser) {
+        return res.status(409).json({ message: 'Email sudah digunakan pengguna lain' });
+      }
+    }
+
+    user.name = name;
+    user.email = email;
+    
+    if (req.file) {
+      user.profilePicture = `/uploads/${req.file.filename}`;
+    }
+
+    await user.save();
+
+    res.json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profilePicture: user.profilePicture
+    });
+  } catch (error) {
+    console.error('Update profile error:', error);
+    res.status(500).json({ message: 'Gagal memperbarui profil', error: error.message });
   }
 });
 

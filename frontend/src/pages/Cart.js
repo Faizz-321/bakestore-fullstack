@@ -8,6 +8,7 @@ import '../styles/Catalog.css';
 const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
   const [barangDipilih, setBarangDipilih] = useState([]);
   const [orderNote, setOrderNote] = useState('');
+  const [paymentProof, setPaymentProof] = useState(null);
   const navigate = useNavigate();
 
   // Memilih semua barang secara otomatis saat pertama kali dimuat
@@ -76,23 +77,35 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
       return;
     }
 
+    if (!paymentProof) {
+      Swal.fire({ icon: 'warning', title: 'Bukti transfer wajib diunggah', text: 'Silakan unggah bukti transfer sebelum melakukan konfirmasi pesanan.' });
+      return;
+    }
+
     try {
-      const payload = {
-        items: itemTerpilih.map((item) => ({
+      const formData = new FormData();
+      formData.append('items', JSON.stringify(
+        itemTerpilih.map((item) => ({
           productId: item.id,
           name: item.nama,
           price: parseInt(String(item.harga).replace(/[^0-9]/g, '')) || 0,
           quantity: item.jumlah,
           note: item.catatan || ''
-        })),
-        note: orderNote || ''
-      };
+        }))
+      ));
+      formData.append('note', orderNote || '');
+      formData.append('paymentProof', paymentProof);
 
-      await API.post('/orders', payload);
+      await API.post('/orders', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
 
       setKeranjang([]);
       setBarangDipilih([]);
       setOrderNote('');
+      setPaymentProof(null);
 
       Swal.fire({
         icon: 'success',
@@ -122,8 +135,8 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
       <div className="katalog-content" style={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
         
         {/* Kolom Kiri: Daftar Keranjang */}
-        <div style={{ flex: '2', background: 'white', borderRadius: '8px', border: '2px solid #38bdf8', overflow: 'hidden' }}>
-          <div style={{ padding: '15px 20px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="glass-panel" style={{ flex: '2', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.4)' }}>
+          <div style={{ padding: '20px 25px', borderBottom: '1px solid rgba(0,0,0,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <input 
                 type="checkbox" 
@@ -197,8 +210,8 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
         </div>
 
         {/* Kolom Kanan: Ringkasan Belanja */}
-        <div style={{ flex: '1', maxWidth: '350px', background: 'white', borderRadius: '8px', padding: '25px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-          <h3 style={{ margin: '0 0 20px 0', fontSize: '15px', color: '#111', fontWeight: 'bold' }}>Ringkasan Belanja</h3>
+        <div className="glass-panel" style={{ flex: '1', maxWidth: '380px', borderRadius: '24px', padding: '30px', border: '1px solid rgba(255,255,255,0.4)' }}>
+          <h3 style={{ margin: '0 0 20px 0', fontSize: '18px', color: '#1f2937', fontWeight: '800' }}>Ringkasan Belanja</h3>
           
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px', color: '#6b7280', fontSize: '13px' }}>
             <span>Total Harga ({totalJumlahBarang} Barang)</span>
@@ -208,13 +221,27 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
           <div style={{ width: '100%', height: '1px', background: '#f3f4f6', margin: '15px 0' }}></div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: '#374151', marginBottom: '8px' }}>Catatan Pesanan (opsional)</label>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Catatan Pesanan (opsional)</label>
             <textarea
               value={orderNote}
               onChange={(e) => setOrderNote(e.target.value)}
               placeholder="Masukkan catatan untuk pesanan ini..."
-              style={{ width: '100%', minHeight: '100px', padding: '12px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '13px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
+              className="search-input"
+              style={{ width: '100%', minHeight: '100px', padding: '15px', borderRadius: '16px', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
             />
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>
+              Bukti Transfer <span style={{ color: '#ef4444' }}>*</span>
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setPaymentProof(e.target.files[0])}
+              style={{ width: '100%', padding: '10px', fontSize: '13px', background: '#f9fafb', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.1)' }}
+            />
+            <p style={{ fontSize: '11px', color: '#9ca3af', marginTop: '6px' }}>Wajib diunggah sebelum checkout.</p>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px', color: '#111', fontSize: '15px', fontWeight: 'bold' }}>
@@ -224,9 +251,9 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
 
           <button 
             onClick={handleCheckoutAction} 
-            disabled={itemTerpilih.length === 0}
-            className={itemTerpilih.length === 0 ? '' : 'btn-primary'}
-            style={{ width: '100%', padding: '14px', background: itemTerpilih.length === 0 ? '#d1d5db' : undefined, color: itemTerpilih.length === 0 ? 'white' : undefined, borderRadius: '6px', fontSize: '14px', fontWeight: 'bold', cursor: itemTerpilih.length === 0 ? 'not-allowed' : 'pointer' }}
+            disabled={itemTerpilih.length === 0 || !paymentProof}
+            className={(itemTerpilih.length === 0 || !paymentProof) ? '' : 'btn-primary'}
+            style={{ width: '100%', padding: '14px', background: (itemTerpilih.length === 0 || !paymentProof) ? '#d1d5db' : undefined, color: (itemTerpilih.length === 0 || !paymentProof) ? 'white' : undefined, borderRadius: '6px', fontSize: '14px', fontWeight: 'bold', cursor: (itemTerpilih.length === 0 || !paymentProof) ? 'not-allowed' : 'pointer' }}
           >
             {isLoggedIn ? "Konfirmasi Pesanan" : "Login untuk Checkout"}
           </button>

@@ -192,25 +192,25 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
   );
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: 'sans-serif', backgroundColor: '#e5e7eb', position: 'relative' }}>
-      <div style={{ width: '250px', backgroundColor: '#111827', color: 'white', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ padding: '20px 25px' }}>
-          <div style={{ backgroundColor: '#f3f4f6', color: '#111827', padding: '10px', textAlign: 'center', fontWeight: 'bold', borderRadius: '4px', marginBottom: '40px', fontSize: '13px' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: '"Outfit", sans-serif', backgroundColor: '#f3f4f6', position: 'relative' }}>
+      <div style={{ width: '260px', backgroundColor: '#1f2937', color: 'white', display: 'flex', flexDirection: 'column', boxShadow: '4px 0 15px rgba(0,0,0,0.05)', zIndex: 10 }}>
+        <div style={{ padding: '30px 25px' }}>
+          <div style={{ background: 'linear-gradient(135deg, #fed7aa 0%, #ffedd5 100%)', color: '#c2410c', padding: '12px', textAlign: 'center', fontWeight: '800', borderRadius: '12px', marginBottom: '40px', fontSize: '15px', boxShadow: '0 4px 10px rgba(194, 65, 12, 0.1)' }}>
             ADMIN PANEL
           </div>
           <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '15px', letterSpacing: '1px' }}>MENU ADMIN</div>
           <div
             onClick={() => setActiveTab('products')}
             style={{
-              backgroundColor: activeTab === 'products' ? '#1f2937' : 'transparent',
+              backgroundColor: activeTab === 'products' ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
               padding: '15px 20px',
-              borderRadius: '6px',
-              borderLeft: `4px solid ${activeTab === 'products' ? '#3b82f6' : 'transparent'}`,
+              borderRadius: '12px',
               color: activeTab === 'products' ? 'white' : '#9ca3af',
-              fontWeight: 'bold',
-              fontSize: '14px',
+              fontWeight: '700',
+              fontSize: '15px',
               cursor: 'pointer',
-              marginBottom: '10px'
+              marginBottom: '10px',
+              transition: 'all 0.2s ease'
             }}
           >
             Kelola Produk
@@ -218,14 +218,14 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
           <div
             onClick={() => setActiveTab('orders')}
             style={{
-              backgroundColor: activeTab === 'orders' ? '#1f2937' : 'transparent',
+              backgroundColor: activeTab === 'orders' ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
               padding: '15px 20px',
-              borderRadius: '6px',
-              borderLeft: `4px solid ${activeTab === 'orders' ? '#3b82f6' : 'transparent'}`,
+              borderRadius: '12px',
               color: activeTab === 'orders' ? 'white' : '#9ca3af',
-              fontWeight: 'bold',
-              fontSize: '14px',
-              cursor: 'pointer'
+              fontWeight: '700',
+              fontSize: '15px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
             }}
           >
             Kelola Pesanan
@@ -233,15 +233,15 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
         </div>
       </div>
 
-      <div style={{ flex: 1, padding: '40px', backgroundColor: '#f9fafb' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-          <h1 style={{ margin: 0, fontSize: '24px', color: '#111827' }}>
+      <div style={{ flex: 1, padding: '40px 50px', backgroundColor: '#f8fafc', overflowY: 'auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px' }}>
+          <h1 style={{ margin: 0, fontSize: '28px', color: '#111827', fontWeight: '800' }}>
             {activeTab === 'products' ? 'Manajemen Produk' : 'Manajemen Pesanan'}
           </h1>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <span style={{ fontSize: '14px', color: '#4b5563', fontWeight: '500' }}>Halo, Admin</span>
-              <div style={{ width: '40px', height: '40px', backgroundColor: '#d1d5db', borderRadius: '50%' }}></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', padding: '8px 16px', background: 'white', borderRadius: '999px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+              <span style={{ fontSize: '14px', color: '#4b5563', fontWeight: '600' }}>Halo, Admin</span>
+              <div style={{ width: '32px', height: '32px', backgroundColor: '#fde68a', color: '#92400e', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>A</div>
             </div>
             <button
               onClick={handleLogout}
@@ -260,12 +260,13 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
               placeholder="Cari nama produk..."
               value={kataKunciPencarian}
               onChange={(e) => setKataKunciPencarian(e.target.value)}
-              style={{ padding: '12px 20px', width: '300px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '14px', outline: 'none' }}
+              className="search-input"
+              style={{ width: '300px' }}
             />
             <button
               onClick={openTambahModal}
-              className="btn btn-blue"
-              style={{ padding: '12px 20px', fontWeight: 'bold', fontSize: '14px' }}
+              className="btn btn-primary"
+              style={{ padding: '12px 24px', fontWeight: '700', fontSize: '14px', borderRadius: '12px' }}
             >
               + Tambah Produk
             </button>
@@ -293,7 +294,7 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
         )}
 
         {activeTab === 'products' ? (
-          <div style={{ border: '2px solid #0ea5e9', borderRadius: '10px', backgroundColor: 'white', padding: '10px 20px', overflow: 'hidden' }}>
+          <div style={{ borderRadius: '20px', backgroundColor: 'white', padding: '0', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', border: '1px solid #f3f4f6' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid #e5e7eb' }}>
@@ -319,19 +320,19 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
                   produkDifilter.map((item, index) => (
                     <React.Fragment key={item.id}>
                       <tr style={{ borderBottom: index !== produkDifilter.length - 1 ? '1px solid #f3f4f6' : 'none' }}>
-                        <td style={{ padding: '15px 10px', fontSize: '14px', color: '#4b5563' }}>{item.id}</td>
-                        <td style={{ padding: '15px 10px' }}>
-                          <img src={item.imageUrl} alt={item.name} style={{ width: '50px', height: '50px', borderRadius: '6px', objectFit: 'cover' }} />
+                        <td style={{ padding: '15px 20px', fontSize: '14px', color: '#4b5563' }}>{item.id}</td>
+                        <td style={{ padding: '15px 20px' }}>
+                          <img src={item.imageUrl} alt={item.name} style={{ width: '56px', height: '56px', borderRadius: '12px', objectFit: 'cover', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }} />
                         </td>
-                        <td style={{ padding: '15px 10px', fontSize: '14px', fontWeight: 'bold', color: '#111827' }}>{item.name}</td>
-                        <td style={{ padding: '15px 10px' }}>
-                          <span style={{ backgroundColor: '#e5e7ff', color: '#3730a3', padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold' }}>
+                        <td style={{ padding: '15px 20px', fontSize: '15px', fontWeight: '700', color: '#111827' }}>{item.name}</td>
+                        <td style={{ padding: '15px 20px' }}>
+                          <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '6px 14px', borderRadius: '999px', fontSize: '12px', fontWeight: '700' }}>
                             {item.category}
                           </span>
                         </td>
-                        <td style={{ padding: '15px 10px', textAlign: 'center', minWidth: '90px', width: '90px', fontSize: '14px', color: '#111827' }}>{item.stock}</td>
-                        <td style={{ padding: '15px 10px', fontSize: '14px', color: '#4b5563' }}>{formatCurrency(item.price)}</td>
-                        <td style={{ padding: '15px 10px', textAlign: 'center' }}>
+                        <td style={{ padding: '15px 20px', textAlign: 'center', minWidth: '90px', width: '90px', fontSize: '15px', color: '#111827', fontWeight: '600' }}>{item.stock}</td>
+                        <td style={{ padding: '15px 20px', fontSize: '15px', color: '#4b5563', fontWeight: '500' }}>{formatCurrency(item.price)}</td>
+                        <td style={{ padding: '15px 20px', textAlign: 'center' }}>
                           <button
                             onClick={() => toggleProductDetails(item.id)}
                             className="btn btn-blue"
@@ -370,16 +371,16 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
             </table>
           </div>
         ) : (
-          <div style={{ border: '2px solid #0ea5e9', borderRadius: '10px', backgroundColor: 'white', padding: '10px 20px', overflow: 'hidden' }}>
+          <div style={{ borderRadius: '20px', backgroundColor: 'white', padding: '0', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', border: '1px solid #f3f4f6' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid #e5e7eb' }}>
-                  <th style={{ padding: '15px 10px', fontSize: '13px', color: '#4b5563' }}>No</th>
-                  <th style={{ padding: '15px 10px', fontSize: '13px', color: '#4b5563' }}>Pelanggan</th>
-                  <th style={{ padding: '15px 10px', fontSize: '13px', color: '#4b5563' }}>Total</th>
-                  <th style={{ padding: '15px 10px', fontSize: '13px', color: '#4b5563' }}>Status</th>
-                  <th style={{ padding: '15px 10px', fontSize: '13px', color: '#4b5563' }}>Tanggal</th>
-                  <th style={{ padding: '15px 10px', fontSize: '13px', color: '#4b5563', textAlign: 'center' }}>Aksi</th>
+                  <th style={{ padding: '15px 20px', fontSize: '13px', color: '#4b5563' }}>No</th>
+                  <th style={{ padding: '15px 20px', fontSize: '13px', color: '#4b5563' }}>Pelanggan</th>
+                  <th style={{ padding: '15px 20px', fontSize: '13px', color: '#4b5563' }}>Total</th>
+                  <th style={{ padding: '15px 20px', fontSize: '13px', color: '#4b5563' }}>Status</th>
+                  <th style={{ padding: '15px 20px', fontSize: '13px', color: '#4b5563' }}>Tanggal</th>
+                  <th style={{ padding: '15px 20px', fontSize: '13px', color: '#4b5563', textAlign: 'center' }}>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -395,26 +396,26 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
                   filteredOrders.map((order, index) => (
                     <React.Fragment key={order.id}>
                       <tr style={{ borderBottom: '1px solid #f3f4f6' }}>
-                        <td style={{ padding: '15px 10px', fontSize: '14px', color: '#4b5563' }}>{index + 1}</td>
-                        <td style={{ padding: '15px 10px', fontSize: '14px', color: '#111827' }}>
-                          <div style={{ fontWeight: 'bold' }}>{order.customerName || 'Pelanggan'}</div>
-                          <div style={{ color: '#6b7280', fontSize: '12px' }}>{order.customerEmail || '-'}</div>
+                        <td style={{ padding: '15px 20px', fontSize: '14px', color: '#4b5563', fontWeight: '500' }}>{index + 1}</td>
+                        <td style={{ padding: '15px 20px', fontSize: '14px', color: '#111827' }}>
+                          <div style={{ fontWeight: '700' }}>{order.customerName || 'Pelanggan'}</div>
+                          <div style={{ color: '#6b7280', fontSize: '13px', marginTop: '2px' }}>{order.customerEmail || '-'}</div>
                         </td>
-                        <td style={{ padding: '15px 10px', fontSize: '14px', color: '#4b5563' }}>{formatCurrency(order.totalAmount || 0)}</td>
-                        <td style={{ padding: '15px 10px', fontSize: '14px' }}>
+                        <td style={{ padding: '15px 20px', fontSize: '15px', color: '#111827', fontWeight: '700' }}>{formatCurrency(order.totalAmount || 0)}</td>
+                        <td style={{ padding: '15px 20px', fontSize: '14px' }}>
                           <span className={`order-status status-${order.status || 'unknown'}`}>
                             {order.status || 'unknown'}
                           </span>
                         </td>
-                        <td style={{ padding: '15px 10px', fontSize: '14px', color: '#4b5563' }}>
+                        <td style={{ padding: '15px 20px', fontSize: '14px', color: '#4b5563', fontWeight: '500' }}>
                           {order.createdAt ? new Date(order.createdAt).toLocaleString('id-ID') : '-'}
                         </td>
-                        <td style={{ padding: '15px 10px', textAlign: 'center' }}>
+                        <td style={{ padding: '15px 20px', textAlign: 'center' }}>
                           {order.status === 'pending' && (
                             <button
                               onClick={() => handleUpdateOrderStatus(order.id, 'confirmed')}
                               className="btn btn-blue"
-                              style={{ padding: '8px 15px', fontSize: '12px', fontWeight: 'bold', marginRight: '10px' }}
+                              style={{ padding: '8px 16px', fontSize: '13px', fontWeight: '700', marginRight: '8px', borderRadius: '8px' }}
                             >
                               Konfirmasi
                             </button>
@@ -423,7 +424,7 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
                             <button
                               onClick={() => handleUpdateOrderStatus(order.id, 'processing')}
                               className="btn btn-warning"
-                              style={{ padding: '8px 15px', fontSize: '12px', fontWeight: 'bold', marginRight: '10px' }}
+                              style={{ padding: '8px 16px', fontSize: '13px', fontWeight: '700', marginRight: '8px', borderRadius: '8px' }}
                             >
                               Proses
                             </button>
@@ -432,7 +433,7 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
                             <button
                               onClick={() => handleUpdateOrderStatus(order.id, 'completed')}
                               className="btn btn-success"
-                              style={{ padding: '8px 15px', fontSize: '12px', fontWeight: 'bold', marginRight: '10px' }}
+                              style={{ padding: '8px 16px', fontSize: '13px', fontWeight: '700', marginRight: '8px', borderRadius: '8px' }}
                             >
                               Selesai
                             </button>
@@ -441,29 +442,43 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
                             <button
                               onClick={() => handleUpdateOrderStatus(order.id, 'cancelled')}
                               className="btn btn-danger"
-                              style={{ padding: '8px 15px', fontSize: '12px', fontWeight: 'bold' }}
+                              style={{ padding: '8px 16px', fontSize: '13px', fontWeight: '700', borderRadius: '8px' }}
                             >
                               Batal
                             </button>
                           )}
                         </td>
                       </tr>
-                      <tr style={{ backgroundColor: '#f9fafb' }}>
-                        <td colSpan="6" style={{ padding: '10px 20px', fontSize: '13px', color: '#4b5563' }}>
-                          <div style={{ marginBottom: '10px' }}>
-                            <div style={{ fontWeight: 'bold', marginBottom: '6px' }}>Detail Pesanan</div>
-                            <div style={{ fontSize: '12px' }}>ID Pesanan: #{order.id}</div>
-                            <div style={{ fontSize: '12px' }}>Total Item: {(order.items || []).reduce((sum, item) => sum + (item.quantity || 0), 0)}</div>
+                      <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #f3f4f6' }}>
+                        <td colSpan="6" style={{ padding: '20px', fontSize: '14px', color: '#4b5563' }}>
+                          <div style={{ marginBottom: '15px', background: 'white', padding: '15px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
+                            <div style={{ fontWeight: '800', marginBottom: '8px', color: '#111827', fontSize: '15px' }}>Detail Pesanan</div>
+                            <div style={{ fontSize: '13px', color: '#6b7280' }}>ID Pesanan: <span style={{ color: '#111827', fontWeight: '600' }}>#{order.id}</span></div>
+                            <div style={{ fontSize: '13px', color: '#6b7280' }}>Total Item: <span style={{ color: '#111827', fontWeight: '600' }}>{(order.items || []).reduce((sum, item) => sum + (item.quantity || 0), 0)}</span></div>
                           </div>
-                          <div style={{ fontSize: '12px', color: order.note ? '#374151' : '#9ca3af', marginBottom: '10px', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                          <div style={{ fontSize: '13px', color: order.note ? '#374151' : '#9ca3af', marginBottom: '15px', whiteSpace: 'pre-wrap', wordBreak: 'break-word', background: order.note ? '#fef3c7' : 'transparent', padding: order.note ? '10px 15px' : '0', borderRadius: '8px', borderLeft: order.note ? '4px solid #f59e0b' : 'none' }}>
                             {order.note ? `Catatan Pesanan: ${order.note}` : 'Tidak ada catatan pelanggan'}
                           </div>
-                          <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Item:</div>
-                          {(order.items || []).map((item) => (
-                            <div key={item.id || `${order.id}-${item.productId || item.productName}` } style={{ marginBottom: '6px' }}>
-                              • {item.productName} x{item.quantity || 0} - {formatCurrency(item.price || 0)}{item.note ? ` (Catatan: ${item.note})` : ''}
+                          <div style={{ fontWeight: '800', marginBottom: '10px', color: '#111827', fontSize: '14px' }}>Item Pesanan:</div>
+                          <div style={{ background: 'white', borderRadius: '12px', border: '1px solid #e5e7eb', padding: '15px', marginBottom: '15px' }}>
+                            {(order.items || []).map((item) => (
+                              <div key={item.id || `${order.id}-${item.productId || item.productName}` } style={{ marginBottom: '8px', display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed #e5e7eb', paddingBottom: '8px' }}>
+                                <div>
+                                  <span style={{ fontWeight: '600', color: '#111827' }}>{item.productName}</span> <span style={{ color: '#6b7280' }}>x{item.quantity || 0}</span>
+                                  {item.note && <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>Catatan: {item.note}</div>}
+                                </div>
+                                <div style={{ fontWeight: '600', color: '#111827' }}>{formatCurrency(item.price || 0)}</div>
+                              </div>
+                            ))}
+                          </div>
+                          {order.paymentProof && (
+                            <div style={{ marginTop: '15px' }}>
+                              <div style={{ fontWeight: '800', marginBottom: '8px', color: '#111827', fontSize: '14px' }}>Bukti Transfer:</div>
+                              <a href={`http://localhost:5000${order.paymentProof}`} target="_blank" rel="noopener noreferrer">
+                                <img src={`http://localhost:5000${order.paymentProof}`} alt="Bukti Transfer" style={{ maxWidth: '250px', maxHeight: '250px', borderRadius: '12px', border: '2px solid #e5e7eb', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', transition: 'transform 0.2s' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+                              </a>
                             </div>
-                          ))}
+                          )}
                         </td>
                       </tr>
                     </React.Fragment>
@@ -476,13 +491,13 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
       </div>
 
       {showModal && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(30, 41, 59, 0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '20px', overflowY: 'auto' }}>
-          <div style={{ backgroundColor: 'white', width: '100%', maxWidth: '540px', maxHeight: 'calc(100vh - 40px)', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 20px 25px rgba(0,0,0,0.2)', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ padding: '20px 25px', borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: 0, fontSize: '18px', color: '#111827' }}>{modeModal === 'add' ? 'Tambah Produk Baru' : 'Edit Produk'}</h3>
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '20px', overflowY: 'auto' }}>
+          <div className="glass-panel" style={{ width: '100%', maxWidth: '580px', maxHeight: 'calc(100vh - 40px)', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', display: 'flex', flexDirection: 'column', border: '1px solid rgba(255,255,255,0.6)' }}>
+            <div style={{ padding: '25px 30px', borderBottom: '1px solid rgba(0,0,0,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'white' }}>
+              <h3 style={{ margin: 0, fontSize: '20px', color: '#111827', fontWeight: '800' }}>{modeModal === 'add' ? 'Tambah Produk Baru' : 'Edit Produk'}</h3>
               <span onClick={() => setShowModal(false)} style={{ cursor: 'pointer', fontSize: '20px', color: '#9ca3af' }}>&times;</span>
             </div>
-            <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '16px', maxHeight: 'calc(100vh - 160px)', overflowY: 'auto', minHeight: 0 }}>
+            <div style={{ padding: '30px', display: 'flex', flexDirection: 'column', gap: '20px', maxHeight: 'calc(100vh - 160px)', overflowY: 'auto', minHeight: 0, background: 'white' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: '#374151', marginBottom: '8px' }}>Nama Produk</label>
                 <input
@@ -490,15 +505,17 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
                   onChange={(e) => handleChange('name', e.target.value)}
                   type="text"
                   placeholder="Masukkan nama produk..."
-                  style={{ width: '100%', padding: '12px 15px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+                  className="search-input"
+                  style={{ width: '100%', boxSizing: 'border-box' }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: '#374151', marginBottom: '8px' }}>Kategori</label>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Kategori</label>
                 <select
                   value={formData.category}
                   onChange={(e) => handleChange('category', e.target.value)}
-                  style={{ width: '100%', padding: '12px 15px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', outline: 'none', backgroundColor: 'white', boxSizing: 'border-box' }}
+                  className="search-input"
+                  style={{ width: '100%', backgroundColor: 'white', boxSizing: 'border-box' }}
                 >
                   <option value="Kue Ulang Tahun">Kue Ulang Tahun</option>
                   <option value="Dessert Box">Dessert Box</option>
@@ -507,58 +524,63 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
                 </select>
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: '#374151', marginBottom: '8px' }}>Harga (Rp)</label>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Harga (Rp)</label>
                 <input
                   value={formData.price}
                   onChange={(e) => handleChange('price', e.target.value)}
                   type="number"
                   placeholder="0"
-                  style={{ width: '100%', padding: '12px 15px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+                  className="search-input"
+                  style={{ width: '100%', boxSizing: 'border-box' }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: '#374151', marginBottom: '8px' }}>URL Foto</label>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>URL Foto</label>
                 <input
                   value={formData.imageUrl}
                   onChange={(e) => handleChange('imageUrl', e.target.value)}
                   type="text"
                   placeholder="https://example.com/image.jpg"
-                  style={{ width: '100%', padding: '12px 15px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+                  className="search-input"
+                  style={{ width: '100%', boxSizing: 'border-box' }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: '#374151', marginBottom: '8px' }}>Galeri Foto (URL, pisahkan dengan koma)</label>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Galeri Foto (URL, pisahkan dengan koma)</label>
                 <textarea
                   value={formData.imageGalleryText}
                   onChange={(e) => handleChange('imageGalleryText', e.target.value)}
-                  placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg, https://example.com/img3.jpg"
-                  style={{ width: '100%', minHeight: '60px', padding: '12px 15px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '13px', outline: 'none', boxSizing: 'border-box' }}
+                  placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg"
+                  className="search-input"
+                  style={{ width: '100%', minHeight: '80px', boxSizing: 'border-box' }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: '#374151', marginBottom: '8px' }}>Deskripsi</label>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Deskripsi</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => handleChange('description', e.target.value)}
                   placeholder="Masukkan deskripsi produk..."
-                  style={{ width: '100%', minHeight: '100px', padding: '12px 15px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+                  className="search-input"
+                  style={{ width: '100%', minHeight: '120px', boxSizing: 'border-box' }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: '#374151', marginBottom: '8px' }}>Stok</label>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Stok</label>
                 <input
                   value={formData.stock}
                   onChange={(e) => handleChange('stock', e.target.value)}
                   type="number"
                   min="1"
                   placeholder="Jumlah stok"
-                  style={{ width: '100%', padding: '12px 15px', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+                  className="search-input"
+                  style={{ width: '100%', boxSizing: 'border-box' }}
                 />
               </div>
             </div>
-            <div style={{ padding: '20px 25px', backgroundColor: '#f9fafb', display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
-              <button onClick={() => setShowModal(false)} className="btn btn-secondary" style={{ padding: '10px 25px' }}>Batal</button>
-              <button onClick={handleSaveProduct} className="btn btn-blue" style={{ padding: '10px 25px', fontWeight: 'bold' }}>
+            <div style={{ padding: '20px 30px', backgroundColor: '#f8fafc', display: 'flex', justifyContent: 'flex-end', gap: '15px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+              <button onClick={() => setShowModal(false)} className="btn" style={{ padding: '12px 25px', background: 'white', border: '1px solid #e5e7eb', borderRadius: '12px', fontWeight: '700', color: '#374151' }}>Batal</button>
+              <button onClick={handleSaveProduct} className="btn-primary" style={{ padding: '12px 25px', fontWeight: '700', borderRadius: '12px' }}>
                 {modeModal === 'add' ? 'Tambah Produk' : 'Simpan Perubahan'}
               </button>
             </div>

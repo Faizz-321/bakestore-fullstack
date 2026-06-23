@@ -54,14 +54,16 @@ const Register = () => {
     <div className="katalog-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
       <div className="katalog-overlay"></div>
 
-      <div style={{ position: 'relative', zIndex: 10, background: 'white', padding: '40px', borderRadius: '12px', width: '100%', maxWidth: '420px', boxShadow: '0 10px 25px rgba(0,0,0,0.15)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginBottom: '25px' }}>
+      <div className="glass-panel" style={{ position: 'relative', zIndex: 10, padding: '40px', borderRadius: '24px', width: '100%', maxWidth: '440px', border: '1px solid rgba(255,255,255,0.4)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginBottom: '30px' }}>
           <ArrowLeft
             size={24}
-            style={{ position: 'absolute', left: 0, cursor: 'pointer', color: '#111' }}
+            style={{ position: 'absolute', left: 0, cursor: 'pointer', color: '#1f2937', transition: 'transform 0.2s' }}
+            onMouseEnter={(e) => e.target.style.transform = 'translateX(-3px)'}
+            onMouseLeave={(e) => e.target.style.transform = 'translateX(0)'}
             onClick={() => navigate(-1)}
           />
-          <div style={{ background: '#fed7aa', color: '#c2410c', padding: '6px 12px', fontWeight: 'bold', borderRadius: '4px', fontSize: '14px' }}>
+          <div style={{ background: 'linear-gradient(135deg, #fed7aa 0%, #ffedd5 100%)', color: '#c2410c', padding: '8px 16px', fontWeight: '800', borderRadius: '12px', fontSize: '15px', boxShadow: '0 4px 10px rgba(194, 65, 12, 0.1)' }}>
             CampBread
           </div>
         </div>
@@ -73,50 +75,54 @@ const Register = () => {
 
         <form onSubmit={handleRegisterSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#374151', marginBottom: '6px' }}>Nama Lengkap</label>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Nama Lengkap</label>
             <input
               type="text"
               placeholder="Nama Anda"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{ width: '100%', padding: '12px 15px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box' }}
+              className="search-input"
+              style={{ boxSizing: 'border-box' }}
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#374151', marginBottom: '6px' }}>Email</label>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Email</label>
             <input
               type="email"
               placeholder="email@domain.com"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ width: '100%', padding: '12px 15px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box' }}
+              className="search-input"
+              style={{ boxSizing: 'border-box' }}
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#374151', marginBottom: '6px' }}>Kata Sandi</label>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Kata Sandi</label>
             <input
               type="password"
               placeholder="Minimal 6 karakter"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ width: '100%', padding: '12px 15px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box' }}
+              className="search-input"
+              style={{ boxSizing: 'border-box' }}
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#374151', marginBottom: '6px' }}>Konfirmasi Kata Sandi</label>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>Konfirmasi Kata Sandi</label>
             <input
               type="password"
               placeholder="Ketik ulang kata sandi"
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              style={{ width: '100%', padding: '12px 15px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box' }}
+              className="search-input"
+              style={{ boxSizing: 'border-box' }}
             />
           </div>
 

@@ -31,6 +31,10 @@ const Order = sequelize.define('Order', {
   note: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  paymentProof: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   timestamps: true

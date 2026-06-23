@@ -71,8 +71,12 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
     return (
       <div className="katalog-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <div className="katalog-overlay"></div>
-        <div style={{ position: 'relative', zIndex: 10, padding: '40px', background: 'white', borderRadius: '12px' }}>
-          Memuat detail produk...
+        <div className="glass-panel" style={{ position: 'relative', zIndex: 10, padding: '40px', borderRadius: '24px', textAlign: 'center', maxWidth: '400px' }}>
+          <h2 style={{ margin: '0 0 15px 0', fontSize: '24px', color: '#1f2937' }}>Oops! Produk Tidak Ditemukan</h2>
+          <p style={{ color: '#4b5563', marginBottom: '25px' }}>Sepertinya terjadi kesalahan saat memuat data kue.</p>
+          <button onClick={() => navigate('/')} className="btn-primary" style={{ padding: '12px 24px', border: 'none', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold' }}>
+            Kembali ke Katalog Utama
+          </button>
         </div>
       </div>
     );
@@ -82,10 +86,10 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
     return (
       <div className="katalog-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <div className="katalog-overlay"></div>
-        <div style={{ background: 'white', padding: '40px', borderRadius: '12px', textAlign: 'center', zIndex: 10 }}>
-          <h2>Oops! Produk Tidak Ditemukan</h2>
-          <p>Sepertinya terjadi kesalahan saat memuat data kue.</p>
-          <button onClick={() => navigate('/')} style={{ padding: '10px 20px', background: '#b45309', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', marginTop: '15px' }}>
+        <div className="glass-panel" style={{ padding: '40px', borderRadius: '24px', textAlign: 'center', zIndex: 10, maxWidth: '400px' }}>
+          <h2 style={{ margin: '0 0 15px 0', fontSize: '24px', color: '#1f2937' }}>Oops! Produk Tidak Ditemukan</h2>
+          <p style={{ color: '#4b5563', marginBottom: '25px' }}>Sepertinya terjadi kesalahan saat memuat data kue.</p>
+          <button onClick={() => navigate('/')} className="btn-primary" style={{ padding: '12px 24px', border: 'none', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold' }}>
             Kembali ke Katalog Utama
           </button>
         </div>
@@ -116,7 +120,7 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
           Beranda / {produk.category} / {produk.name}
         </div>
 
-        <div style={{ display: 'flex', background: 'white', borderRadius: '12px', overflow: 'hidden', width: '100%', padding: '35px', gap: '40px', boxShadow: '0 10px 25px rgba(0,0,0,0.15)' }}>
+        <div className="glass-panel" style={{ display: 'flex', borderRadius: '24px', overflow: 'hidden', width: '100%', padding: '40px', gap: '50px', border: '1px solid rgba(255,255,255,0.4)' }}>
           <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <img
               src={galeri[indeksGambar]}
@@ -146,8 +150,8 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
           </div>
 
           <div style={{ flex: '1', display: 'flex', flexDirection: 'column' }}>
-            <h1 style={{ margin: '0 0 10px 0', fontSize: '28px', color: '#111' }}>{produk.name}</h1>
-            <h2 className="product-price product-price-large" style={{ margin: '0 0 15px 0' }}>{formatHarga(produk.price)}</h2>
+            <h1 style={{ margin: '0 0 15px 0', fontSize: '32px', color: '#1f2937', fontWeight: '800', letterSpacing: '0.5px' }}>{produk.name}</h1>
+            <h2 className="product-price" style={{ margin: '0 0 20px 0', fontSize: '24px' }}>{formatHarga(produk.price)}</h2>
             <div style={{ display: 'flex', gap: '3px', marginBottom: '30px' }}>
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={18} fill="#f59e0b" color="#f59e0b" />
@@ -162,15 +166,15 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
             </div>
 
             <div style={{ borderTop: '1px solid #f3f4f6', paddingTop: '25px', marginTop: 'auto' }}>
-              <h4 style={{ margin: '0 0 15px 0', fontSize: '14px', color: '#374151', fontWeight: 'bold' }}>Atur Jumlah</h4>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '25px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #d1d5db', borderRadius: '6px', overflow: 'hidden', height: '40px' }}>
+              <h4 style={{ margin: '0 0 15px 0', fontSize: '15px', color: '#1f2937', fontWeight: '800' }}>Atur Jumlah</h4>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '25px', marginBottom: '30px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', border: '2px solid rgba(209, 213, 219, 0.5)', borderRadius: '12px', overflow: 'hidden', height: '48px', background: 'rgba(255,255,255,0.5)' }}>
                   <button
                     onClick={() => aturJumlah(-1)}
                     disabled={stokTersedia === 0 || jumlahBeli <= 1}
                     style={{
-                      width: '40px', height: '100%', background: 'white', border: 'none', borderRight: '1px solid #d1d5db', cursor: stokTersedia === 0 ? 'not-allowed' : 'pointer',
-                      fontSize: '20px', color: '#374151', display: 'flex', justifyContent: 'center', alignItems: 'center', opacity: stokTersedia === 0 ? 0.4 : 1
+                      width: '48px', height: '100%', background: 'transparent', border: 'none', borderRight: '2px solid rgba(209, 213, 219, 0.5)', cursor: stokTersedia === 0 ? 'not-allowed' : 'pointer',
+                      fontSize: '22px', color: '#374151', display: 'flex', justifyContent: 'center', alignItems: 'center', opacity: stokTersedia === 0 ? 0.4 : 1, transition: 'all 0.2s'
                     }}
                   >-
                   </button>
@@ -179,8 +183,8 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
                     onClick={() => aturJumlah(1)}
                     disabled={stokTersedia === 0 || jumlahBeli >= stokTersedia}
                     style={{
-                      width: '40px', height: '100%', background: 'white', border: 'none', borderLeft: '1px solid #d1d5db', cursor: stokTersedia === 0 ? 'not-allowed' : 'pointer',
-                      fontSize: '20px', color: '#374151', fontWeight: 'bold', display: 'flex', justifyContent: 'center', alignItems: 'center', opacity: stokTersedia === 0 ? 0.4 : 1
+                      width: '48px', height: '100%', background: 'transparent', border: 'none', borderLeft: '2px solid rgba(209, 213, 219, 0.5)', cursor: stokTersedia === 0 ? 'not-allowed' : 'pointer',
+                      fontSize: '22px', color: '#374151', fontWeight: 'bold', display: 'flex', justifyContent: 'center', alignItems: 'center', opacity: stokTersedia === 0 ? 0.4 : 1, transition: 'all 0.2s'
                     }}
                   >+
                   </button>

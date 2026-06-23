@@ -5,19 +5,54 @@ const Order = require('../models/Order');
 const OrderItem = require('../models/OrderItem');
 const User = require('../models/User');
 const Product = require('../models/Product');
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/');
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Hanya file gambar yang diizinkan'), false);
+    }
+  }
+});
 
 const router = express.Router();
 
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, upload.single('paymentProof'), async (req, res) => {
   if (req.user.role !== 'customer') {
     return res.status(403).json({ message: 'Hanya pelanggan yang dapat membuat pesanan.' });
   }
 
-  const { items, note } = req.body;
+  let items;
+  try {
+    items = JSON.parse(req.body.items);
+  } catch (error) {
+    return res.status(400).json({ message: 'Format items tidak valid.' });
+  }
+  const note = req.body.note;
 
   if (!items || !Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ message: 'Pesanan harus berisi minimal satu produk.' });
   }
+
+  if (!req.file) {
+    return res.status(400).json({ message: 'Bukti transfer wajib diunggah.' });
+  }
+
+  const paymentProofUrl = `/uploads/${req.file.filename}`;
 
   try {
     const user = await User.findByPk(req.user.id);
@@ -38,7 +73,8 @@ router.post('/', authMiddleware, async (req, res) => {
         customerEmail: user.email,
         status: 'confirmed',
         totalAmount,
-        note: note || null
+        note: note || null,
+        paymentProof: paymentProofUrl
       }, { transaction });
 
       const orderItems = items.map((item) => ({

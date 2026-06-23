@@ -7,11 +7,13 @@ import '../styles/Catalog.css';
 const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
   const navigate = useNavigate();
   const storedUser = user || JSON.parse(localStorage.getItem('campbread_user') || 'null');
-  const [userData, setUserData] = useState(storedUser || { name: '', email: '', role: '' });
+  const [userData, setUserData] = useState(storedUser || { name: '', email: '', role: '', profilePicture: '' });
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [profileFile, setProfileFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const fetchOrders = useCallback(async () => {
     setLoading(true);
@@ -60,9 +62,19 @@ const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
 
     try {
       setSaving(true);
-      const response = await API.put('/auth/profile', {
-        name: userData.name.trim(),
-        email: userData.email.trim()
+      
+      const formData = new FormData();
+      formData.append('name', userData.name.trim());
+      formData.append('email', userData.email.trim());
+      
+      if (profileFile) {
+        formData.append('profilePicture', profileFile);
+      }
+
+      const response = await API.put('/auth/profile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
       const updatedUser = response.data;
@@ -92,11 +104,15 @@ const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
       <div className="katalog-overlay"></div>
       <div className="katalog-content" style={{ display: 'block', width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '40px 24px', boxSizing: 'border-box' }}>
         <div style={{ display: 'grid', gap: '28px' }}>
-          <section style={{ background: 'white', borderRadius: '24px', padding: '32px', boxShadow: '0 22px 60px rgba(15, 23, 42, 0.08)' }}>
+          <section className="glass-panel" style={{ borderRadius: '24px', padding: '32px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                <div style={{ width: '72px', height: '72px', borderRadius: '22px', background: '#fde68a', display: 'grid', placeItems: 'center', fontSize: '30px', color: '#92400e', fontWeight: '800' }}>
-                  {storedUser.name?.charAt(0).toUpperCase() || 'P'}
+                <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#fde68a', display: 'grid', placeItems: 'center', fontSize: '30px', color: '#92400e', fontWeight: '800', overflow: 'hidden', border: '3px solid white', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
+                  {storedUser.profilePicture ? (
+                    <img src={`http://localhost:5000${storedUser.profilePicture}`} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    storedUser.name?.charAt(0).toUpperCase() || 'P'
+                  )}
                 </div>
                 <div>
                   <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', letterSpacing: '0.02em' }}>Profil Pelanggan</p>
@@ -106,7 +122,11 @@ const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
               </div>
               <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
                 <button
-                  onClick={() => setEditMode((prev) => !prev)}
+                  onClick={() => {
+                    setEditMode((prev) => !prev);
+                    setProfileFile(null);
+                    setPreviewUrl(null);
+                  }}
                   style={{ padding: '12px 20px', borderRadius: '14px', border: '1px solid #d1d5db', background: editMode ? '#f8fafc' : '#fef3c7', color: '#92400e', cursor: 'pointer', fontWeight: '700', minWidth: '140px' }}
                 >
                   {editMode ? 'Batal Edit' : 'Edit Profil'}
@@ -138,6 +158,32 @@ const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
             {editMode && (
               <form onSubmit={handleSaveProfile} style={{ display: 'grid', gap: '18px', marginTop: '30px' }}>
                 <div style={{ display: 'grid', gap: '16px' }}>
+                  <label style={{ fontSize: '13px', color: '#374151', fontWeight: '600' }}>Foto Profil (Opsional)</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: '#f3f4f6', overflow: 'hidden', border: '2px dashed #d1d5db', display: 'grid', placeItems: 'center' }}>
+                      {previewUrl ? (
+                        <img src={previewUrl} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (storedUser.profilePicture ? (
+                        <img src={`http://localhost:5000${storedUser.profilePicture}`} alt="Current Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontSize: '20px', color: '#9ca3af' }}>📷</span>
+                      ))}
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          setProfileFile(file);
+                          setPreviewUrl(URL.createObjectURL(file));
+                        }
+                      }}
+                      style={{ fontSize: '13px', color: '#4b5563', padding: '8px', border: '1px solid #d1d5db', borderRadius: '8px', cursor: 'pointer' }}
+                    />
+                  </div>
+                </div>
+                <div style={{ display: 'grid', gap: '16px' }}>
                   <label style={{ fontSize: '13px', color: '#374151', fontWeight: '600' }}>Nama lengkap</label>
                   <input
                     type="text"
@@ -168,7 +214,7 @@ const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
             )}
           </section>
 
-          <section style={{ background: 'white', borderRadius: '24px', padding: '32px', boxShadow: '0 22px 60px rgba(15, 23, 42, 0.08)' }}>
+          <section className="glass-panel" style={{ borderRadius: '24px', padding: '32px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', flexWrap: 'wrap', marginBottom: '24px' }}>
               <div>
                 <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', letterSpacing: '0.04em' }}>Riwayat Pesanan</p>
